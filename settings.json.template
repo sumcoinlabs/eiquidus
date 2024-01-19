@@ -26,11 +26,11 @@
     // host: The hostname or ip address of the wallet to connect to (default: localhost)
     "host": "localhost",
     // port: The port # that the wallet is configured to listen for RPC requests on (default: 51573 for Exor wallet)
-    "port": 51573,
+    "port": 3332,
     // username: The wallet RPC username
-    "username": "exorrpc",
+    "username": "user",
     // password: The wallet RPC password
-    "password": "sSTLyCkrD94Y8&9mr^m6W^Mk367Vr!!K"
+    "password": "password"
   },
 
   // webserver: a collection of settings that pertain to the node.js express web framework (read more: https://www.npmjs.com/package/express)
@@ -43,7 +43,7 @@
       // enabled: Enable/disable TLS
       //          If set to true, the express webserver will be configured to use an https connection
       //          If set to false, all TLS features will be completely disabled
-      "enabled": false,
+      "enabled": true,
       // port: Port # to configure the express webserver to listen for https requests on
       //       NOTE: Be sure to configure firewalls to allow traffic through this port or the explorer website may not be accessible remotely
       "port": 443,
@@ -52,11 +52,11 @@
       //                  If set to false, the webserver will allow both http and https traffic
       "always_redirect": true,
       // cert_file: The absolute or relative path to the tls certificate file. Typically this file will be generated from certbot (read more: https://certbot.eff.org)
-      "cert_file": "/etc/letsencrypt/live/domain-name-here/cert.pem",
+      "cert_file": "/etc/letsencrypt/live/sumexplorer.com/cert.pem",
       // chain_file: The absolute or relative path to the tls chain file. Typically this file will be generated from certbot (read more: https://certbot.eff.org)
-      "chain_file": "/etc/letsencrypt/live/domain-name-here/chain.pem",
+      "chain_file": "/etc/letsencrypt/live/sumexplorer.com/chain.pem",
       // key_file: The absolute or relative path to the tls private key file. Typically this file will be generated from certbot (read more: https://certbot.eff.org)
-      "key_file": "/etc/letsencrypt/live/domain-name-here/privkey.pem"
+      "key_file": "/etc/letsencrypt/live/sumexplorer.com/privkey.pem"
     },
     // cors: a collection of settings that pertain to the cors feature
     //       Cross-Origin Resource Sharing (CORS) support (read more: https://www.maxcdn.com/one/visual-glossary/cors/)
@@ -77,9 +77,9 @@
   "coin": {
     // name: Name of the cryptocurrency coin being explored. This value is displayed in the page header when the "shared_pages.page_header.home_link" setting is set to "coin".
     //       NOTE: This value acts as a unique identifier for data stored in mongo and therefore cannot be changed without re-syncing all existing data.
-    "name": "Exor",
+    "name": "Sumcoin",
     // symbol: The cryptocurrency coin ticker/symbol value. This value is displayed anywhere that coin data is displayed including the index, address, block, movement, reward, richlist/top100 and tx pages
-    "symbol": "EXOR"
+    "symbol": "SUM"
   },
 
   // network_history: a collection of settings that controls saving of extra historical network data during a block sync
@@ -88,7 +88,7 @@
     //          If set to false, historical data such as network hashrate and difficulty values will not be saved or available for network charts
     "enabled": true,
     // max_saved_records: The maximum # of blocks to save historical data for
-    "max_saved_records": 120
+    "max_saved_records": 2880
   },
 
   /* Shared page settings */
@@ -98,9 +98,9 @@
     // theme: Change the look & feel of the explorer with a unique theme. Uses bootswatch themes (https://bootswatch.com)
     //        Valid options: Cerulean, Cosmo, Cyborg, Darkly, Exor, Flatly, Journal, Litera, Lumen, Lux, Materia, Minty, Morph, Pulse, Quartz, Sandstone, Simplex, Sketchy, Slate, Solar, Spacelab, Superhero, United, Vapor, Yeti, Zephyr
     //        (see /public/css/themes for available themes)
-    "theme": "Exor",
+    "theme": "Darkly",
     // page_title: The text to display at the end of the HTML title tag and also displayed in the page header when the "shared_pages.page_header.home_link" setting is set to "title"
-    "page_title": "eIquidus",
+    "page_title": "Sumcoin",
     // favicons: a collection of image or icon files that are displayed in a browser window/tab and serve as branding for your website. Their main purpose is to help visitors locate your page easier when they have multiple tabs open
     //          Modern favicon sizes were inspired by this web article: https://www.emergeinteractive.com/insights/detail/The-Essentials-of-FavIcons/
     //          NOTE: If any of the favicons are left blank or not set to a valid file, they will be disabled and unused
@@ -118,6 +118,7 @@
       //            NOTE: The path root is /public
       "favicon192": "favicon-192.png"
     },
+
     // logo: The path to an image file that is displayed on the api page as well as in one of the top panels when enabled
     //       This logo can also be displayed in the header when the "shared_pages.page_header.home_link" setting is set to "logo" and the "shared_pages.page_header.home_link_logo" setting is blank or an invalid file
     //       NOTE: The path root is /public
@@ -200,7 +201,7 @@
           //                M: Display value in megahashes (MH/s)
           //                K: Display value in kilohashes (KH/s)
           //                H: Display value in hashes (H/s)
-          "nethash_units": "G"
+          "nethash_units": "M"
         },
         // difficulty_panel: a collection of settings that pertain to the difficulty panel which displays the current proof-of-work difficulty (only applicable to POW coins)
         "difficulty_panel": {
@@ -216,7 +217,7 @@
         "masternodes_panel": {
           // enabled: Enable/disable the masternode panel (true/false)
           //          If set to false, the masternode panel will be completely inaccessible
-          "enabled": true,
+          "enabled": false,
           // display_order: Determine which order this panel is shown from 1-5
           //                1 = far left panel, 5 = far right panel
           //                The panel will be disabled with a value of 0
@@ -266,7 +267,7 @@
         "usd_market_cap_panel": {
           // enabled: Enable/disable the usd market cap panel (true/false)
           //          If set to false, the usd market cap panel will be completely inaccessible
-          "enabled": true,
+          "enabled": false,
           // display_order: Determine which order this panel is shown from 1-5
           //                1 = far left panel, 5 = far right panel
           //                The panel will be disabled with a value of 0
@@ -432,7 +433,7 @@
           // tooltip_text: Social link tooltips are always prefixed by the "coin.name" setting followed by the text from this tooltip_text setting. Ex: Exor Github
           "tooltip_text": "Github",
           // url: The exact url that the social link should navigate to
-          "url": "https://github.com/team-exor",
+          "url": "https://github.com/sumcoinlabs",
           // fontawesome_class: A string of css classes, separated by spaces that can be used to display a fontawesome icon for this social link. See https://fontawesome.com/ for more info
           "fontawesome_class": "fa-brands fa-github",
           // image_path: The path to an image file that will be displayed for this social link
@@ -446,7 +447,7 @@
           // tooltip_text: Social link tooltips are always prefixed by the "coin.name" setting followed by the text from this tooltip_text setting. Ex: Exor Twitter
           "tooltip_text": "Twitter",
           // url: The exact url that the social link should navigate to
-          "url": "https://twitter.com/ExorOfficial",
+          "url": "https://twitter.com/sumcoinindex",
           // fontawesome_class: A string of css classes, separated by spaces that can be used to display a fontawesome icon for this social link. See https://fontawesome.com/ for more info
           "fontawesome_class": "fa-brands fa-twitter",
           // image_path: The path to an image file that will be displayed for this social link
@@ -460,7 +461,7 @@
           // tooltip_text: Social link tooltips are always prefixed by the "coin.name" setting followed by the text from this tooltip_text setting. Ex: Exor Discord
           "tooltip_text": "Discord",
           // url: The exact url that the social link should navigate to
-          "url": "https://discord.gg/dSuGm3y",
+          "url": "https://discordapp.com/invite/ffJT5s8",
           // fontawesome_class: A string of css classes, separated by spaces that can be used to display a fontawesome icon for this social link. See https://fontawesome.com/ for more info
           "fontawesome_class": "fa-brands fa-discord",
           // image_path: The path to an image file that will be displayed for this social link
@@ -474,7 +475,7 @@
           // tooltip_text: Social link tooltips are always prefixed by the "coin.name" setting followed by the text from this tooltip_text setting. Ex: Exor Telegram
           "tooltip_text": "Telegram",
           // url: The exact url that the social link should navigate to
-          "url": "https://t.me/Exorofficial",
+          "url": "https://t.me/sumcoins",
           // fontawesome_class: A string of css classes, separated by spaces that can be used to display a fontawesome icon for this social link. See https://fontawesome.com/ for more info
           "fontawesome_class": "fa-brands fa-telegram",
           // image_path: The path to an image file that will be displayed for this social link
@@ -488,7 +489,7 @@
           // tooltip_text: Social link tooltips are always prefixed by the "coin.name" setting followed by the text from this tooltip_text setting. Ex: Exor Website
           "tooltip_text": "Website",
           // url: The exact url that the social link should navigate to
-          "url": "https://exor.io",
+          "url": "https://www.sumcoin.org",
           // fontawesome_class: A string of css classes, separated by spaces that can be used to display a fontawesome icon for this social link. See https://fontawesome.com/ for more info
           "fontawesome_class": "",
           // image_path: The path to an image file that will be displayed for this social link
@@ -502,7 +503,7 @@
           // tooltip_text: Social link tooltips are always prefixed by the "coin.name" setting followed by the text from this tooltip_text setting. Ex: Exor Coingecko
           "tooltip_text": "Coingecko",
           // url: The exact url that the social link should navigate to
-          "url": "https://www.coingecko.com/en/coins/exor",
+          "url": "https://www.coingecko.com/en/coins/sumcoin",
           // fontawesome_class: A string of css classes, separated by spaces that can be used to display a fontawesome icon for this social link. See https://fontawesome.com/ for more info
           "fontawesome_class": "",
           // image_path: The path to an image file that will be displayed for this social link
@@ -523,7 +524,7 @@
       "social_link_percent_height_mobile": 40,
       // powered_by_text: Customize the "powered by" text in the center of the footer with some custom html
       //                  NOTE: Add the keyword {explorer_version} to display the current version number of the explorer
-      "powered_by_text": "<a class='nav-link poweredby' href='https://github.com/team-exor/eiquidus' target='_blank'>eIquidus v{explorer_version}</a>"
+      "powered_by_text": "<a class='nav-link poweredby' href='https://github.com/sumcoinlabs/eiquidus' target='_blank'>SumcoinLabs v{explorer_version}</a>"
     }
   },
 
@@ -555,10 +556,10 @@
       //                      NOTE: Page length options will be limited based on the max_items_per_query for the /ext/getlasttxs api
       "page_length_options": [ 10, 25, 50, 75, 100, 250, 500, 1000 ],
       // items_per_page: The default amount of items/records to display in the table at any given time
-      "items_per_page": 10,
+      "items_per_page": 25,
       // reload_table_seconds: The time in seconds to automatically reload the table data from the server
       //                       Set to 0 to disable automatic reloading of table data
-      "reload_table_seconds": 60
+      "reload_table_seconds": 30
     }
   },
 
@@ -582,7 +583,7 @@
     // genesis_block: Your coins genesis block hash is used to determine the beginning of the blockchain
     //                For many bitcoin clones you can use the following cmd to get the block hash of the genesis block: coin-cli getblockhash 0
     //                NOTE: If this value is not entered correctly it will not be possible for the explorer to find or navigate to the genesis block, neither via block or transaction hash
-    "genesis_block": "00014f36c648cdbc750f7dd28487a23cd9e0b0f95f5fccc5b5d01367e3f57469"
+    "genesis_block": "000000f40beaad5804ce621cca107c37dccd119e887625fe79fe0f4e161f6219"
   },
 
   // transaction_page: a collection of settings that pertain to the transaction/tx page
@@ -1049,14 +1050,14 @@
       // blockhash: This value can be any valid block hash from your coins blockchain
       //            For many bitcoin clones you can use the following cmd to get the block hash for a given block height: coin-cli getblockhash 64152
       //            NOTE: This value is only used to build example api links on the api page from the /api/getblock api for example
-      "blockhash": "775d67da29dd6553268061f86368d06654944dd5d5c61db4c97e4c7960c11a74",
+      "blockhash": "1d3892705342fa00370bd9f438e510395ed0241a70aa2c148a03d2d15c57ebf4",
       // txhash: This value can be any valid transaction hash from your coins blockchain
       //         For many bitcoin clones you can use the following cmd to find a list of tx hashes for a given block hash: coin-cli getblock 000000001ba119a0f6d49ebabd83343b125d7ee3d3184b1b41d6a7f2051153eb
       //         NOTE: This value is only used to build example api links on the api page from the /api/getrawtransaction api for example
-      "txhash": "6cb3babd256de253f926f10bc8574dadf0a3e2fc8380107b81eb07c67d1e73ed",
+      "txhash": "6ac5a1dac2700eb70cfad19a9ca1058480a2dde794c9cd6ec4ebe94027f697cb",
       // address: This value can be any valid wallet address from your coins blockchain that has received at least 1 or more coin transactions
       //          NOTE: This value is only used to build example api links on the api page from the /ext/getaddress api for example
-      "address": "ELvb8AZRgHmdsDnD1HYFwbSY4UkPhoECCW"
+      "address": "SYDDEBXwyrzQ6hWHkq7WyC3Ms8X165uMaW"
     },
     // public_apis: a collection of settings that pertain to the public api command system
     //              NOTE: Disabling any of these apis will remove the api definition from the api page and will return a "This method is disabled" msg if the api endpoint is called.
@@ -1344,7 +1345,7 @@
     //         HEAVY: retrieved from getsupply rpc cmd (The "blockchain_specific.heavycoin.enabled" setting must be set to true and the "blockchain_specific.heavycoin.api_cmds.getsupply" setting must be set up correctly for this option to work properly)
     //         BALANCES : get the supply by running a query on the addresses collection and summing up all positive balances (potentially a long running query for blockchains with tons of addresses)
     //         TXOUTSET : retrieved from gettxoutsetinfo rpc cmd
-    "supply": "GETINFO"
+    "supply": "TXOUTSET"
   },
 
   // labels: a collection of settings that pertain to the list of customized wallet address labels
