@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  .col-md-12.cardSpacer
+    #page-header-container(style='align-items:flex-start')
+      #page-title-container
+        h3#page-title About SumExplorer
+        .sub-page-header.text-muted Independent Sumcoin blockchain data, transaction lookup, and network visibility.
+      .cardSpacer.clearfix
+
+    .card.card-default.border-0.cardSpacer
+      .card-header
+        strong SumExplorer at a glance
+      .card-body
+        p.lead.mb-3 SumExplorer is a public Sumcoin blockchain explorer built to help users verify transactions, inspect blocks, review public address activity, and monitor the Sumcoin network.
+        p.mb-0 The explorer does not hold coins, operate as an exchange, or control wallet balances. It reads public blockchain data and presents it in a searchable format so users can independently confirm what has happened on-chain.
+
+    .row
+      .col-md-6.cardSpacer
+        .card.card-default.border-0.h-100
+          .card-header
+            strong What the explorer shows
+          .card-body
+            ul.mb-0
+              li Recent Sumcoin blocks and transactions.
+              li Transaction IDs, confirmations, timestamps, and public outputs.
+              li Public address balances and address transaction history.
+              li Rich list information and visible coin distribution.
+              li Network information such as peers, block height, difficulty, and hashrate.
+      .col-md-6.cardSpacer
+        .card.card-default.border-0.h-100
+          .card-header
+            strong What the explorer cannot do
+          .card-body
+            ul.mb-0
+              li It cannot reverse, cancel, or accelerate a transaction.
+              li It cannot recover private keys, seed words, or wallet passwords.
+              li It cannot identify the owner of a public blockchain address.
+              li It cannot move funds or change blockchain history.
+              li It cannot replace a wallet, node, exchange, or backup.
+
+    .card.card-default.border-0.cardSpacer
+      .card-header
+        strong Why blockchain explorers matter
+      .card-body
+        p Blockchain explorers give users a public way to check whether a transaction was broadcast, included in a block, and confirmed by the network. This is useful when comparing wallet status, exchange deposits, payments, and public address balances.
+        p.mb-0 SumExplorer is intended to make Sumcoin activity easier to review without requiring every visitor to run a full node or inspect raw blockchain data manually.

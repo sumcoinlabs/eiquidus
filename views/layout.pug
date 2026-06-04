@@ -2,9 +2,75 @@ doctype html
 html(lang='en')
   head
     meta(charset='UTF-8')
-    meta(name='viewport' content='width=device-width, initial-scale=1')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
     meta(http-equiv='Content-Language', content='en')
-    title=(page_title_prefix == null || page_title_prefix == '' ? settings.locale.error_title.replace('{1}', settings.coin.name) : page_title_prefix) + ' - ' + settings.shared_pages.page_title
+
+    // SEO core vars
+    -
+      var siteBaseUrl = 'https://sumexplorer.com';
+      if (!canonicalUrl || canonicalUrl == '') {
+        canonicalUrl = siteBaseUrl;
+      }
+      var defaultOgImage = siteBaseUrl + '/favicon-180.png';
+      var baseTitle = (page_title_prefix ? page_title_prefix + ' - ' : '') + settings.coin.name;
+      var pageDescription = page_description || 'Sumcoin (SUM) blockchain explorer – live blocks, transactions, rich list, network hashrate, difficulty, and market data.';
+      var pageKeywords = 'Sumcoin, SUM, blockchain explorer, Sumcoin explorer, Sumcoin blocks, Sumcoin transactions, Sumcoin rich list, Sumcoin network hashrate, Sumcoin difficulty, Sumcoin markets, cryptocurrency, crypto index, proof of stake, proof of work';
+      var ogImage = defaultOgImage;
+      var ldBase = {
+        "@context": "https://schema.org",
+        "@type": "Cryptocurrency",
+        "name": settings.coin.name,
+        "symbol": settings.coin.symbol,
+        "url": canonicalUrl || siteBaseUrl,
+        "image": ogImage || defaultOgImage,
+        "description": pageDescription,
+        "currentExchangeRate": {
+          "@type": "UnitPriceSpecification",
+          "price": 0,
+          "priceCurrency": "USD"
+        },
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "Market Cap (USD)",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Circulating Supply",
+            "value": 0
+          }
+        ]
+      };
+      var isErrorPage = (typeof baseTitle !== 'undefined' && baseTitle && baseTitle.toString().toLowerCase().indexOf('error') > -1);
+    title=baseTitle
+    // Canonical
+    if !isErrorPage
+      link(rel='canonical', href=canonicalUrl)
+    // Standard SEO metas
+    meta(name='description', content=pageDescription)
+    meta(name='keywords', content=pageKeywords)
+    if isErrorPage
+      meta(name='robots', content='noindex,follow')
+    else
+      meta(name='robots', content='index,follow')
+    // OpenGraph (for Discord, Facebook, Telegram, etc.)
+    meta(property='og:title', content=baseTitle)
+    meta(property='og:description', content=pageDescription)
+    meta(property='og:type', content='article')
+    meta(property='og:url', content=canonicalUrl)
+    meta(property='og:site_name', content=settings.coin.name)
+    meta(property='og:locale', content='en_US')
+    meta(property='og:image', content=ogImage)
+    meta(property='og:image:alt', content=settings.coin.name + ' logo')
+    // Twitter Card
+    meta(name='twitter:card', content='summary_large_image')
+    meta(name='twitter:title', content=baseTitle)
+    meta(name='twitter:description', content=pageDescription)
+    meta(name='twitter:image', content=ogImage)
+    // JSON-LD base (will be updated dynamically with live price in JS)
+    script(type='application/ld+json', id='ld-json-coin') !{JSON.stringify(ldBase)}
+    // Favicons from settings (if configured)
     if settings.shared_pages.favicons.favicon32 != ''
       link(rel='icon', href='/' + settings.shared_pages.favicons.favicon32, sizes='32x32')
     if settings.shared_pages.favicons.favicon128 != ''
@@ -13,6 +79,11 @@ html(lang='en')
       link(rel='icon', href='/' + settings.shared_pages.favicons.favicon180, sizes='180x180')
     if settings.shared_pages.favicons.favicon192 != ''
       link(rel='icon', href='/' + settings.shared_pages.favicons.favicon192, sizes='192x192')
+
+    // Hard-coded favicon for sumexplorer.com
+    link(rel='apple-touch-icon', sizes='180x180', href='https://sumexplorer.com/favicon-180.png')
+    link(rel='icon', type='image/png', sizes='180x180', href='https://sumexplorer.com/favicon-180.png')
+
     link(rel='stylesheet', href='/css/themes/' + settings.shared_pages.theme.toLowerCase() + '/bootstrap.min.css' + (themeHash == null ? '' : '?h=' + themeHash))
     link(rel='stylesheet', href='https://use.fontawesome.com/releases/v6.4.2/css/all.css')
     if active == 'network'
@@ -26,6 +97,9 @@ html(lang='en')
     script(type='text/javascript', src='/js/custom.js')
     script(type='text/javascript', src='https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.js')
     script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/2.3.2/browser/overlayscrollbars.browser.es6.min.js', integrity="sha512-jh4tHrf3Zaee6k2wOl1kVm4Gm5uIFbOQkUPfA419yLxADm1Q9jtihcGAJUl9ThBR8yc4/VYCOQCY/K87g14kSw==", crossorigin="anonymous", referrerpolicy="no-referrer")
+    if !isErrorPage
+      script(async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1492791099222955" crossorigin="anonymous")
+
     - var showPanels = false
     - var showNethashChart = false
     - var showDifficultyChart = false
@@ -148,6 +222,7 @@ html(lang='en')
       - showNetworkPanel = true
     script.
       const { OverlayScrollbars } = OverlayScrollbarsGlobal;
+      const canonicalHref = '#{canonicalUrl || ''}';
 
       /* special thanks to the stackoverflow community for the getParameterByName function: https://stackoverflow.com/a/901144/3038650 */
       function getParameterByName(name, url = window.location.href) {
@@ -450,6 +525,42 @@ html(lang='en')
             splitParts = splitValue.split('.');
             $("#lastUSDPrice").html(splitParts[0] + '.<span class="decimal">' + splitParts[1] + '</span>');
             showTopPanelData('usdpricepanel', 'usdPricePanelLoading');
+
+            // Dynamic JSON-LD update with live price, supply, and market cap
+            const ldElement = document.getElementById('ld-json-coin');
+            if (ldElement) {
+              try {
+                const ldData = {
+                  "@context": "https://schema.org",
+                  "@type": "Cryptocurrency",
+                  "name": "#{settings.coin.name}".replace(/"/g, '\\"'),
+                  "symbol": "#{settings.coin.symbol}".replace(/"/g, '\\"'),
+                  "url": canonicalHref || window.location.href,
+                  "image": "#{ogImage}".replace(/"/g, '\\"'),
+                  "description": "#{metaDescJson}",
+                  "currentExchangeRate": {
+                    "@type": "UnitPriceSpecification",
+                    "price": Number(json.lastUSDPrice),
+                    "priceCurrency": "USD"
+                  },
+                  "additionalProperty": [
+                    {
+                      "@type": "PropertyValue",
+                      "name": "Market Cap (USD)",
+                      "value": Number(json.lastUSDPrice * parseFloat(json.supply || 0))
+                    },
+                    {
+                      "@type": "PropertyValue",
+                      "name": "Circulating Supply",
+                      "value": Number(json.supply || 0)
+                    }
+                  ]
+                };
+                ldElement.textContent = JSON.stringify(ldData);
+              } catch (e) {
+                // ignore schema update errors
+              }
+            }
           }});
         }
         $(document).ready(function() {
@@ -1398,6 +1509,17 @@ html(lang='en')
           li.text-center
             p
               | !{settings.shared_pages.page_footer.powered_by_text.replace('{explorer_version}', settings.explorer_version + (settings.revision == null || settings.revision == '' ? '' : `-${settings.revision}`))}
+            ul.nav.justify-content-center.small
+              li.nav-item
+                a.nav-link.px-2(href='/about') About
+              li.nav-item
+                a.nav-link.px-2(href='/contact') Contact
+              li.nav-item
+                a.nav-link.px-2(href='/privacy') Privacy
+              li.nav-item
+                a.nav-link.px-2(href='/how-to-use-sumexplorer') How to Use
+              li.nav-item
+                a.nav-link.px-2(href='/verify-sumcoin-transaction') Verify Transaction
       .col-4.navbar-nav
         ui.nav.justify-content-end
           label#lblBlockcount.badge.nav-link.border-0.float-end

@@ -173,6 +173,20 @@ block content
       .cardSpacer.clearfix
     .card.card-default.border-0.cardSpacer
       .card-header
+        strong Masternode page guide
+      .card-body
+        .row
+          .col-md-4
+            h5.mb-2 Status and activity
+            p.mb-0.small This page lists Sumcoin masternodes known to the explorer, including status, last seen time, protocol details, and public node activity.
+          .col-md-4
+            h5.mb-2 Payment tracking
+            p.mb-0.small Last paid and active-since fields help users review visible masternode history and compare node activity over time.
+          .col-md-4
+            h5.mb-2 Public network data
+            p.mb-0.small Masternode information is gathered from public network data and may change as nodes connect, disconnect, update, or become unreachable.
+    .card.card-default.border-0.cardSpacer
+      .card-header
         strong Masternode List
       table#masternodes-table.table.table-bordered.table-striped.table-paging.table-hover
         - var theadClasses = [];

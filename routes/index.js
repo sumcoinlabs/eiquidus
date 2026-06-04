@@ -632,6 +632,42 @@ router.get('/orphans', function(req, res) {
   }
 });
 
+
+function render_content_page(res, view, active, title, description) {
+  res.render(
+    view,
+    {
+      active: active,
+      showSync: db.check_show_sync_message(),
+      customHash: get_custom_hash(),
+      styleHash: get_style_hash(),
+      themeHash: get_theme_hash(),
+      page_title_prefix: title,
+      page_description: description
+    }
+  );
+}
+
+router.get('/about', function(req, res) {
+  render_content_page(res, 'about', 'about', 'About SumExplorer', 'Learn what SumExplorer is, how it displays public Sumcoin blockchain data, and what the explorer can and cannot do.');
+});
+
+router.get('/contact', function(req, res) {
+  render_content_page(res, 'contact', 'contact', 'Contact SumExplorer', 'Contact and support guidance for SumExplorer, including how to report explorer display issues safely.');
+});
+
+router.get('/privacy', function(req, res) {
+  render_content_page(res, 'privacy', 'privacy', 'Privacy Policy', 'Privacy information for SumExplorer, public blockchain data, web server logs, and third-party services.');
+});
+
+router.get('/how-to-use-sumexplorer', function(req, res) {
+  render_content_page(res, 'how-to-use-sumexplorer', 'how-to-use-sumexplorer', 'How to Use SumExplorer', 'A practical guide to searching blocks, transactions, addresses, rich list data, and network information on SumExplorer.');
+});
+
+router.get('/verify-sumcoin-transaction', function(req, res) {
+  render_content_page(res, 'verify-sumcoin-transaction', 'verify-sumcoin-transaction', 'Verify a Sumcoin Transaction', 'How to verify a Sumcoin transaction, check confirmations, and understand transaction details on SumExplorer.');
+});
+
 router.post('/search', function(req, res) {
   if (settings.shared_pages.page_header.search.enabled == true) {
     var query = req.body.search.trim();

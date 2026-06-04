@@ -42,6 +42,20 @@ block content
       .cardSpacer.clearfix
     .card.card-default.border-0.cardSpacer
       .card-header
+        strong Transaction page guide
+      .card-body
+        .row
+          .col-md-4
+            h5.mb-2 Confirmation status
+            p.mb-0.small This page shows whether the transaction is confirmed, how many confirmations it has, and which block recorded it.
+          .col-md-4
+            h5.mb-2 Contributors and recipients
+            p.mb-0.small Public inputs and outputs help users review where visible funds came from and where they were sent.
+          .col-md-4
+            h5.mb-2 Public blockchain record
+            p.mb-0.small SumExplorer displays indexed public chain data only. It cannot reverse, resend, or modify a transaction.
+    .card.card-default.border-0.cardSpacer
+      .card-header
         strong=settings.locale.tx_hash + ': ' + tx.txid
         if settings.api_page.public_apis.rpc.getrawtransaction.enabled == true
           a.d-none.d-md-inline(href=`/api/getrawtransaction?txid=${tx.txid}&decrypt=1`, style='color: var(--bs-body-color);')

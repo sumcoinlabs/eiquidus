@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  .col-md-12.cardSpacer
+    #page-header-container(style='align-items:flex-start')
+      #page-title-container
+        h3#page-title Contact SumExplorer
+        .sub-page-header.text-muted Report explorer display issues, broken pages, or public data problems safely.
+      .cardSpacer.clearfix
+
+    .card.card-default.border-0.cardSpacer
+      .card-header
+        strong Before contacting anyone
+      .card-body
+        p.lead.mb-3 SumExplorer displays public blockchain information only. It cannot access private wallets, recover funds, reverse transactions, or reset wallet credentials.
+        p.mb-0 If you need help with a wallet application, exchange deposit, private key, or recovery phrase, contact the wallet provider or service involved. Never share private keys, seed words, passwords, or backup files with anyone.
+
+    .row
+      .col-md-6.cardSpacer
+        .card.card-default.border-0.h-100
+          .card-header
+            strong Useful details to include
+          .card-body
+            ul.mb-0
+              li The full SumExplorer page URL.
+              li A transaction ID, block height, block hash, or public address.
+              li A short description of what appears incorrect.
+              li Screenshots if the issue is visual or intermittent.
+              li The approximate time you noticed the issue.
+      .col-md-6.cardSpacer
+        .card.card-default.border-0.h-100
+          .card-header
+            strong Do not send
+          .card-body
+            ul.mb-0
+              li Private keys.
+              li Recovery phrases or seed words.
+              li Wallet passwords.
+              li Exchange login details.
+              li Personal identity documents unless specifically required by the service you are contacting.
+
+    .card.card-default.border-0.cardSpacer
+      .card-header
+        strong Community and project links
+      .card-body
+        p Sumcoin community links are available in the footer of this site. Those channels are generally better for wallet questions, project discussion, and community support.
+        p.mb-0 For explorer-specific issues, include public blockchain identifiers only. Public transaction IDs and public addresses are enough for most troubleshooting.

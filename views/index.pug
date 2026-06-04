@@ -156,6 +156,20 @@ block content
       .cardSpacer.clearfix
     .card.card-default.border-0.cardSpacer
       .card-header
+        strong SumExplorer Guide
+      .card-body
+        .row
+          .col-md-4
+            h5.mb-2 About SumExplorer
+            p.mb-0.small SumExplorer is a public Sumcoin blockchain explorer for checking live blocks, transactions, addresses, network activity, and rich list information.
+          .col-md-4
+            h5.mb-2 Verify transactions
+            p.mb-0.small Search by transaction ID, block hash, block height, or public address to confirm whether a Sumcoin payment has appeared on-chain and how many confirmations it has.
+          .col-md-4
+            h5.mb-2 Read network data
+            p.mb-0.small Explorer data can help users review block height, confirmations, timestamps, difficulty, hashrate, public balances, and recent verified Sumcoin activity.
+    .card.card-default.border-0.cardSpacer
+      .card-header
         strong #{settings.locale.ex_latest_transactions}
       table#recent-table.table.table-bordered.table-striped.table-paging.table-hover
         - var theadClasses = [];

@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  .col-md-12.cardSpacer
+    #page-header-container(style='align-items:flex-start')
+      #page-title-container
+        h3#page-title How to Use SumExplorer
+        .sub-page-header.text-muted Search, verify, and understand Sumcoin blockchain activity.
+      .cardSpacer.clearfix
+
+    .card.card-default.border-0.cardSpacer
+      .card-header
+        strong Start with the search bar
+      .card-body
+        p.lead.mb-3 The search bar at the top of SumExplorer can look up transaction IDs, block hashes, block heights, and public Sumcoin addresses.
+        p.mb-0 Search results open the matching explorer page when the data is available. If nothing is found, the item may not exist, may not be indexed yet, may belong to another chain, or may have been copied incorrectly.
+
+    .row
+      .col-md-6.cardSpacer
+        .card.card-default.border-0.h-100
+          .card-header
+            strong Common searches
+          .card-body
+            ul.mb-0
+              li Paste a transaction ID to check confirmation status.
+              li Enter a block height to review a specific block.
+              li Search a block hash to inspect block details.
+              li Enter a public address to review visible balance and history.
+              li Use the rich list to review public balance distribution.
+      .col-md-6.cardSpacer
+        .card.card-default.border-0.h-100
+          .card-header
+            strong Reading explorer pages
+          .card-body
+            ul.mb-0
+              li Block pages show height, difficulty, size, timestamp, and included transactions.
+              li Transaction pages show confirmations, contributors, recipients, and public amount data.
+              li Address pages show public balance, sent/received totals, and recent activity.
+              li Network pages show visible peers and node connection information.
+              li Movement pages highlight larger recent transactions.
+
+    .card.card-default.border-0.cardSpacer
+      .card-header
+        strong Tips for accurate verification
+      .card-body
+        p Confirm that you copied the complete transaction ID or address. Blockchain identifiers are long and a single missing character can produce no result.
+        p.mb-0 If a payment is very recent, wait for the explorer to index the latest block data, then search again. Wallet display timing and explorer indexing can differ briefly.

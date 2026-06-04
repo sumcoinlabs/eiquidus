@@ -304,6 +304,20 @@ block content
               else
                 .sub-page-header.text-muted=settings.locale.net_description.replace('{1}', settings.coin.name)
         .cardSpacer.clearfix
+        .card.card-default.border-0.cardSpacer
+          .card-header
+            strong Network page guide
+          .card-body
+            .row
+              .col-md-4
+                h5.mb-2 Peer visibility
+                p.mb-0.small This page shows visible Sumcoin network peers and connection information known to the explorer at the time the page loads.
+              .col-md-4
+                h5.mb-2 Node connection help
+                p.mb-0.small Addnode and onetry examples can help wallet or node operators connect to reachable peers on the Sumcoin network.
+              .col-md-4
+                h5.mb-2 Changing network data
+                p.mb-0.small Peer lists are dynamic. Nodes may connect, disconnect, upgrade, change addresses, or become temporarily unreachable.
       ul.nav.nav-tabs(role='tablist')
         li.nav-item(role='presentation')
           a.nav-link.active(href='#connections', aria-controls='connections', role='tab', data-bs-toggle='tab') #{settings.locale.net_connections}

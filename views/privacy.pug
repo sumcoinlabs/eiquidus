@@ -1,0 +1,42 @@
+extends layout
+
+block content
+  .col-md-12.cardSpacer
+    #page-header-container(style='align-items:flex-start')
+      #page-title-container
+        h3#page-title Privacy Policy
+        .sub-page-header.text-muted Public blockchain data, server logs, advertising, and user safety.
+      .cardSpacer.clearfix
+
+    .card.card-default.border-0.cardSpacer
+      .card-header
+        strong Public blockchain data
+      .card-body
+        p.lead.mb-3 SumExplorer displays information that already exists on the public Sumcoin blockchain.
+        p.mb-0 This may include block hashes, transaction IDs, public addresses, timestamps, amounts, confirmations, block heights, rich list entries, and network statistics. Public blockchain data can be viewed and analyzed by anyone.
+
+    .row
+      .col-md-6.cardSpacer
+        .card.card-default.border-0.h-100
+          .card-header
+            strong Site usage information
+          .card-body
+            p Standard web server logs may include request details such as IP address, browser type, requested URL, referring page, and timestamp.
+            p.mb-0 This information is used for security, abuse prevention, troubleshooting, uptime monitoring, and improving site reliability.
+      .col-md-6.cardSpacer
+        .card.card-default.border-0.h-100
+          .card-header
+            strong Advertising and third parties
+          .card-body
+            p SumExplorer may use third-party services such as content delivery networks, analytics tools, or advertising networks.
+            p.mb-0 These services may process basic browser, device, or request information according to their own privacy policies.
+
+    .card.card-default.border-0.cardSpacer
+      .card-header
+        strong Wallet privacy reminder
+      .card-body
+        ul.mb-0
+          li Do not enter private keys, seed words, or wallet passwords into a block explorer.
+          li Public addresses are visible on-chain and may be analyzed by third parties.
+          li Avoid publishing personal information that connects your identity to a public blockchain address unless you intend to do so.
+          li SumExplorer cannot remove confirmed public blockchain history.
