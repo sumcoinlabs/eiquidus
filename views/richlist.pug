@@ -91,6 +91,21 @@ block content
                 else
                   .sub-page-header.text-muted=settings.locale.rl_description.replace('{1}', settings.coin.name)
           .cardSpacer.clearfix
+  .container
+    .card.card-default.border-0.cardSpacer
+      .card-header
+        strong Rich list guide
+      .card-body
+        .row
+          .col-md-4
+            h5.mb-2 Public balance ranking
+            p.mb-0.small The rich list ranks visible Sumcoin addresses by public balance or received coins.
+          .col-md-4
+            h5.mb-2 Distribution view
+            p.mb-0.small Wealth distribution tables and charts help summarize how visible supply is spread across addresses.
+          .col-md-4
+            h5.mb-2 Address ownership
+            p.mb-0.small Public addresses do not prove personal identity. Labels, if present, are informational and should be verified independently.
   .row(style='margin-left:0;margin-right:0;')
     if settings.richlist_page.show_current_balance == true || settings.richlist_page.show_received_coins == true
       div(class=(settings.richlist_page.wealth_distribution.show_distribution_table == true || settings.richlist_page.wealth_distribution.show_distribution_chart == true ? 'col-xs-12 col-lg-8' : 'col-12'))

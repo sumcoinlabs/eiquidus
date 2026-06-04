@@ -1,0 +1,49 @@
+extends layout
+
+block content
+  .col-md-12.cardSpacer
+    #page-header-container(style='align-items:flex-start')
+      #page-title-container
+        h3#page-title Verify a Sumcoin Transaction
+        .sub-page-header.text-muted Confirm transaction status, block inclusion, and confirmations.
+      .cardSpacer.clearfix
+
+    .card.card-default.border-0.cardSpacer
+      .card-header
+        strong Quick verification steps
+      .card-body
+        .row
+          .col-md-4
+            h5.mb-2 1. Copy the transaction ID
+            p.mb-0.small Get the full transaction ID from your wallet, exchange, payment record, or service history.
+          .col-md-4
+            h5.mb-2 2. Search SumExplorer
+            p.mb-0.small Paste the transaction ID into the search bar. If indexed, the transaction detail page will open.
+          .col-md-4
+            h5.mb-2 3. Check confirmations
+            p.mb-0.small Review the block, timestamp, confirmations, contributors, recipients, and amount information.
+
+    .row
+      .col-md-6.cardSpacer
+        .card.card-default.border-0.h-100
+          .card-header
+            strong What confirmations mean
+          .card-body
+            p Confirmations show how many blocks have been added after the block containing the transaction.
+            p.mb-0 More confirmations generally mean the transaction is deeper in the public chain history. Different wallets, services, and exchanges may require different confirmation counts.
+      .col-md-6.cardSpacer
+        .card.card-default.border-0.h-100
+          .card-header
+            strong If the transaction is not found
+          .card-body
+            ul.mb-0
+              li Check that the transaction ID was copied completely.
+              li Wait and search again if the transaction is very recent.
+              li Confirm the payment was sent on the Sumcoin network.
+              li Ask the sending wallet or service whether the transaction was actually broadcast.
+
+    .card.card-default.border-0.cardSpacer
+      .card-header
+        strong Important limitation
+      .card-body
+        p.mb-0 SumExplorer cannot cancel, accelerate, reverse, resend, or recover a transaction. It only displays public blockchain data that has been indexed from the Sumcoin network.

@@ -145,6 +145,20 @@ block content
             else
               .sub-page-header.text-muted=settings.locale.a_description.replace('{1}', settings.coin.name).replace('{2}', (address.a_id == 'hidden_address' ? settings.locale.hidden_address : (address.a_id == 'unknown_address' ? settings.locale.unknown_address : address.a_id)))
       .cardSpacer.clearfix
+    .card.card-default.border-0.cardSpacer
+      .card-header
+        strong Address page guide
+      .card-body
+        .row
+          .col-md-4
+            h5.mb-2 Public address data
+            p.mb-0.small This page shows public Sumcoin address activity, visible balance, and indexed transaction history.
+          .col-md-4
+            h5.mb-2 Sent and received totals
+            p.mb-0.small Address totals are calculated from public blockchain records and may update as new blocks are indexed.
+          .col-md-4
+            h5.mb-2 Privacy note
+            p.mb-0.small A public address does not identify a wallet owner by itself, but blockchain activity can be analyzed by anyone.
     .card.card-default.border-0.card-address-summary.cardSpacer
       .card-header(style='position:relative;')
         if settings.claim_address_page.enabled == false || claim_name == null || claim_name == ''

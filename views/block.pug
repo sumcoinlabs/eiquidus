@@ -55,6 +55,20 @@ block content
       .cardSpacer.clearfix
     .card.card-default.border-0.cardSpacer
       .card-header
+        strong Block page guide
+      .card-body
+        .row
+          .col-md-4
+            h5.mb-2 Block summary
+            p.mb-0.small This page shows the block height, hash, difficulty, timestamp, size, and confirmation count.
+          .col-md-4
+            h5.mb-2 Included transactions
+            p.mb-0.small The transaction table lists public Sumcoin transactions recorded inside this block.
+          .col-md-4
+            h5.mb-2 Chain position
+            p.mb-0.small Previous and next block links help users move through public blockchain history in order.
+    .card.card-default.border-0.cardSpacer
+      .card-header
         div(style='display: flex;flex-wrap: wrap;')
           if block.previousblockhash != null
             a(href='/block/' + block.previousblockhash)

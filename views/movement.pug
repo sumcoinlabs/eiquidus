@@ -146,6 +146,20 @@ block content
       .cardSpacer.clearfix
     .card.card-default.border-0.cardSpacer
       .card-header
+        strong Movement page guide
+      .card-body
+        .row
+          .col-md-4
+            h5.mb-2 Large transaction activity
+            p.mb-0.small This page highlights recent Sumcoin transactions above the configured movement threshold so users can review larger visible transfers.
+          .col-md-4
+            h5.mb-2 Review transaction details
+            p.mb-0.small Each row links to a transaction page where users can inspect block inclusion, timestamp, recipients, confirmations, and public amount data.
+          .col-md-4
+            h5.mb-2 Monitoring context
+            p.mb-0.small Movement data can help identify larger public transfers, but it does not identify private wallet owners or explain why a transfer occurred.
+    .card.card-default.border-0.cardSpacer
+      .card-header
         strong="Latest Movement"
       table#movement-table.table.table-bordered.table-striped.table-paging.table-hover.mobile-border-right
         - var theadClasses = [];
