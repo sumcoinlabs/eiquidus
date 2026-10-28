@@ -66,6 +66,7 @@ if (settings.webserver.cors.enabled == true) {
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+app.enable('view cache');
 
 var default_favicon = '';
 
@@ -93,6 +94,67 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // routes
 app.use('/api', nodeapi.app);
+
+// SUMEXPLORER_HOMEPAGE_CACHE
+// Cache only the public homepage for 30 seconds.
+// Never cache authenticated or cookie-bearing requests.
+const sumexplorerHomeCache = {
+  html: null,
+  expires: 0,
+  refreshing: false
+};
+
+app.use(function(req, res, next) {
+  const host = req.headers.host || '';
+
+  if (
+    req.method !== 'GET' ||
+    req.originalUrl !== '/' ||
+    !/^(www\.)?sumexplorer\.com(?::\d+)?$/i.test(host) ||
+    req.headers.cookie ||
+    req.headers.authorization
+  ) {
+    return next();
+  }
+
+  const now = Date.now();
+
+  if (
+    sumexplorerHomeCache.html &&
+    (now < sumexplorerHomeCache.expires ||
+     sumexplorerHomeCache.refreshing)
+  ) {
+    res.set('X-Sumexplorer-Cache', 'HIT');
+    return res.type('html').send(sumexplorerHomeCache.html);
+  }
+
+  sumexplorerHomeCache.refreshing = true;
+
+  const originalSend = res.send;
+
+  res.send = function(body) {
+    if (
+      res.statusCode === 200 &&
+      typeof body === 'string' &&
+      /^\s*<(!doctype\s+html|html)\b/i.test(body) &&
+      !res.getHeader('Set-Cookie')
+    ) {
+      sumexplorerHomeCache.html = body;
+      sumexplorerHomeCache.expires = Date.now() + 120000;
+      res.setHeader('X-Sumexplorer-Cache', 'MISS');
+    }
+
+    sumexplorerHomeCache.refreshing = false;
+    return originalSend.call(this, body);
+  };
+
+  res.on('close', function() {
+    sumexplorerHomeCache.refreshing = false;
+  });
+
+  next();
+});
+
 app.use('/', routes);
 
 // post method to claim an address using verifymessage functionality
