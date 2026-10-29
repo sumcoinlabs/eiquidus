@@ -451,12 +451,68 @@ html(lang='en')
             }
           }
         }
+        let summaryRetryTimer = null;
+        let summaryRequestActive = false;
+
+        function summaryRequestFailed() {
+          const panels = [
+            'supplyPanelLoading',
+            'pricePanelLoading',
+            'usdPricePanelLoading',
+            'marketCapPanelLoading',
+            'usdMarketCapPanelLoading',
+            'difficultyPanelLoading',
+            'hashratePanelLoading',
+            'masternodePanelLoading'
+          ];
+
+          panels.forEach(function(id) {
+            const el = $('#' + id);
+            if (el.length) {
+              el.stop(true, true).show().html(
+                '<small>Temporarily unavailable. Retrying...</small>'
+              );
+            }
+          });
+
+          if (summaryRetryTimer === null) {
+            summaryRetryTimer = setTimeout(function() {
+              summaryRetryTimer = null;
+              update_stats();
+            }, 15000);
+          }
+        }
+
         function update_stats() {
+          if (summaryRequestActive) return;
+          summaryRequestActive = true;
+
           const summary_headers = {
             Accept: 'application/json, text/javascript, */*; q=0.01'
           };
 
-          $.ajax({url: '/ext/getsummary', headers: summary_headers, success: function(json) {
+          $.ajax({
+            url: '/ext/getsummary',
+            headers: summary_headers,
+            dataType: 'json',
+            cache: false,
+            timeout: 10000,
+            success: function(json) {
+            if (!json ||
+                !Number.isFinite(Number(json.supply)) ||
+                !Number.isFinite(Number(json.lastPrice)) ||
+                !Number.isFinite(Number(json.lastUSDPrice)) ||
+                Number(json.supply) <= 0 ||
+                Number(json.lastUSDPrice) <= 0) {
+              summaryRequestFailed();
+              return;
+            }
+
+            if (summaryRetryTimer !== null) {
+              clearTimeout(summaryRetryTimer);
+              summaryRetryTimer = null;
+            }
+
             if (json.masternodeCountOnline == null)
               json.masternodeCountOnline = '-';
             if (json.masternodeCountOffline == null)
@@ -486,12 +542,12 @@ html(lang='en')
             $("#supply").text(supplyString);
             showTopPanelData('supplypanel', 'supplyPanelLoading');
 
-            splitValue = Number(parseFloat(json.lastPrice).toFixed(8) * parseInt(parseFloat(json.supply).toFixed(0))).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
+            splitValue = Number(Number(json.lastPrice) * Number(json.supply)).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
             splitParts = splitValue.split('.');
             $("#marketCap").html(splitParts[0] + '.<span class="decimal">' + splitParts[1] + '</span>');
             showTopPanelData('marketCapPanel', 'marketCapPanelLoading');
 
-            splitValue = Number(parseFloat(json.lastUSDPrice).toFixed(8) * parseInt(parseFloat(json.supply).toFixed(0))).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
+            splitValue = Number(Number(json.lastUSDPrice) * Number(json.supply)).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
             splitParts = splitValue.split('.');
             $("#usdMarketCap").html(splitParts[0] + '.<span class="decimal">' + splitParts[1] + '</span>');
             showTopPanelData('usdMarketCapPanel', 'usdMarketCapPanelLoading');
@@ -561,7 +617,15 @@ html(lang='en')
                 // ignore schema update errors
               }
             }
-          }});
+            },
+            error: function(xhr, status) {
+              console.warn('SumExplorer stats request failed:', status);
+              summaryRequestFailed();
+            },
+            complete: function() {
+              summaryRequestActive = false;
+            }
+          });
         }
         $(document).ready(function() {
           hideShowPanel('#{settings.panel1}', 'pnlOne');
